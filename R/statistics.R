@@ -22,10 +22,10 @@ quiz_statistics <- function(
   )
   scores <- scores[order(scores$score), ]
   scores_summary <- data.frame(
-    score_mean = res$score_average,
-    score_sd = res$score_stdev,
-    score_min = res$score_low,
-    score_max = res$score_high,
+    score_mean = res$score_average %||% NA_real_,
+    score_sd = res$score_stdev %||% NA_real_,
+    score_min = res$score_low %||% NA_real_,
+    score_max = res$score_high %||% NA_real_,
     correct_count_mean = res$correct_count_average,
     incorrect_count_mean = res$incorrect_count_average,
     duration_mean = res$duration_average,
@@ -58,6 +58,10 @@ quiz_submissions <- function(
   token = Sys.getenv("CANVASQUIZ_TOKEN"),
   n = count_submissions(quiz_id, course_id, url, token)
 ) {
+  if(n == 0) {
+    cli::cli_alert_warning("No submissions found for quiz {quiz_id}. Returning empty data frame.")
+    return(data.frame())
+  }
   ## Get the answer for each question
   ass_id <- quizzes_url(course_id) |>
     httr2::req_url_path_append(quiz_id) |>
@@ -118,6 +122,10 @@ quiz_results <- function(
   n = count_submissions(quiz_id, course_id, url, token),
   tz = Sys.timezone()
 ) {
+  if(n == 0) {
+    cli::cli_alert_warning("No submissions found for quiz {quiz_id}. Returning empty data frame.")
+    return(data.frame())
+  }
   ## Get user submissions
   get_page <- function(page) {
     quiz_data <- quizzes_url(course_id) |>

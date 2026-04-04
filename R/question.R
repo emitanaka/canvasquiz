@@ -211,7 +211,7 @@ answer_multiple <- function(...) {
   if (length(cls) != 1) {
     cli::cli_abort("All answers must be of the same type.")
   }
-  if (cls == "dropdown_question") {
+  if (cls == "dropdown") {
     structure(dots, type = "multiple_dropdowns_question")
   } else if (cls == "fitb") {
     structure(dots, type = "fill_in_multiple_blanks_question")
