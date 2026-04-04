@@ -50,7 +50,7 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The canvasquiz package provides functions to interact with the Canvas LMS API, specifically for constructing quizzes and retrieving quiz data.</p>
+<p>The canvasquiz package provides functions to interact with the Canvas LMS API, specifically for constructing quizzes and retrieving quiz data. This package allows you to write the quizzes in R and directly push them to Canvas, as well as retrieve quiz statistics and results for analysis.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -75,6 +75,9 @@
 <p>Or set this in your <code>.Renviron</code> file for persistence across sessions. You can use the <code>usethis</code> package to edit your <code>.Renviron</code> file:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The URL is the base URL of your Canvas instance, e.g. at ANU it is <code>https://canvas.anu.edu.au</code>.</p>
+<p>The access token can be generated in your Canvas account settings under “Approved Integrations”.</p>
+<p>The course ID can be found in the URL of your course in Canvas. For example if your course URL is <code>https://canvas.anu.edu.au/courses/12345</code>, then the course ID is <code>12345</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="creating-a-quiz">Creating a quiz<a class="anchor" aria-label="anchor" href="#creating-a-quiz"></a>

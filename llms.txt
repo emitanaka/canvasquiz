@@ -2,6 +2,8 @@
 
 The canvasquiz package provides functions to interact with the Canvas
 LMS API, specifically for constructing quizzes and retrieving quiz data.
+This package allows you to write the quizzes in R and directly push them
+to Canvas, as well as retrieve quiz statistics and results for analysis.
 
 ## Installation
 
@@ -36,6 +38,16 @@ You can use the `usethis` package to edit your `.Renviron` file:
 ``` r
 usethis::edit_r_environ()
 ```
+
+The URL is the base URL of your Canvas instance, e.g. at ANU it is
+`https://canvas.anu.edu.au`.
+
+The access token can be generated in your Canvas account settings under
+“Approved Integrations”.
+
+The course ID can be found in the URL of your course in Canvas. For
+example if your course URL is `https://canvas.anu.edu.au/courses/12345`,
+then the course ID is `12345`.
 
 ### Creating a quiz
 
