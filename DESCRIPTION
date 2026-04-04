@@ -1,0 +1,26 @@
+Package: canvasquiz
+Title: Quiz For Canvas Learning Management System
+Version: 0.0.9000
+Authors@R: person(
+    "Emi", "Tanaka",
+    role = c("aut", "cre", "cph"),
+    email = "dr.emi.tanaka@gmail.com",
+    comment = c(ORCID = "0000-0002-1455-259X")
+  )
+Description: Create, manipulate and get classic quizzes directly via Canvas learning management system's API.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    cli,
+    commonmark,
+    curl,
+    dplyr,
+    glue,
+    httr2,
+    tidyr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.3.3
+Roxygen: list(markdown = TRUE)
