@@ -302,7 +302,12 @@ list_questions <- function(
 
 
 #' Delete all quizzes
+#' 
+#' Use with caution! This function will delete all quizzes in the course after asking for confirmation. It will not delete quiz question banks.
+#' 
+#' @inheritParams quiz_questions
 #'
+#' @export
 delete_all_quizzes <- function(
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),

@@ -10,6 +10,13 @@ delete_all_quizzes(
   token = Sys.getenv("CANVASQUIZ_TOKEN")
 )
 }
+\arguments{
+\item{course_id}{The course id. Defaults to the value of the \code{CANVASQUIZ_COURSE_ID} environment variable.}
+
+\item{url}{The canvas url. Defaults to the value of the \code{CANVASQUIZ_URL} environment variable.}
+
+\item{token}{The canvas token. Defaults to the value of the \code{CANVASQUIZ_TOKEN} environment variable.}
+}
 \description{
-Delete all quizzes
+Use with caution! This function will delete all quizzes in the course after asking for confirmation. It will not delete quiz question banks.
 }
