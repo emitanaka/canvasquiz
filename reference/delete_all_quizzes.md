@@ -1,6 +1,7 @@
 # Delete all quizzes
 
-Delete all quizzes
+Use with caution! This function will delete all quizzes in the course
+after asking for confirmation. It will not delete quiz question banks.
 
 ## Usage
 
@@ -11,3 +12,20 @@ delete_all_quizzes(
   token = Sys.getenv("CANVASQUIZ_TOKEN")
 )
 ```
+
+## Arguments
+
+- course_id:
+
+  The course id. Defaults to the value of the `CANVASQUIZ_COURSE_ID`
+  environment variable.
+
+- url:
+
+  The canvas url. Defaults to the value of the `CANVASQUIZ_URL`
+  environment variable.
+
+- token:
+
+  The canvas token. Defaults to the value of the `CANVASQUIZ_TOKEN`
+  environment variable.
