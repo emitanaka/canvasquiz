@@ -1,0 +1,225 @@
+---
+format: gfm
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# canvasquiz
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The canvasquiz package provides functions to interact with the Canvas LMS API, specifically for constructing quizzes and retrieving quiz data. 
+
+
+## Installation
+
+You can install the development version of canvasquiz from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("emitanaka/canvasquiz")
+```
+
+
+
+## Usage
+
+
+
+```r
+library(canvasquiz)
+```
+
+### Set environment variables
+
+In the R environment, you can set the following environment variables to avoid having to specify them in each function call:
+
+```r
+Sys.setenv(CANVASQUIZ_COURSE_ID = "your_course_id")
+Sys.setenv(CANVASQUIZ_URL = "https://your_canvas_instance.instructure.com")
+Sys.setenv(CANVASQUIZ_TOKEN = "your_access_token")
+```
+
+Or set this in your `.Renviron` file for persistence across sessions. You can use the `usethis` package to edit your `.Renviron` file: 
+
+```r
+usethis::edit_r_environ()
+```
+
+### Creating a quiz
+
+
+```r
+qid <- create_quiz(title = "Quiz 1", 
+                   description = "This assessment is 30 minutes with only one attempt.",
+                   quiz_type = "practice_quiz",
+                   attempts = attempt_options(n = 1, time = 30))
+```
+
+The output will be the quiz ID of the newly created quiz. Use this quiz ID to add questions to the quiz. If the quiz ID is not specified, the question will be added to the most recently created quiz.
+
+#### Numerical question
+
+The exact value match:
+
+```r
+create_question("What is 2 + 2?",
+                answers = answer_num(4),
+                points = 1,
+                quiz_id = qid)
+```
+
+The value match with a tolerance:
+
+```r
+create_question("What is square root of 2?",
+                answers = answer_num(sqrt(2), tol = 0.1),
+                points = 1,
+                quiz_id = qid)
+```
+
+The value match with a specified number of decimal places:
+
+```r
+create_question("What is square root of 2?",
+                answers = answer_num_precision(sqrt(2), precision = 1),
+                points = 1,
+                quiz_id = qid)
+```
+
+The value match within a specified range:
+
+```r
+create_question("What is the value of pi?",
+                answers = answer_num_range(3.14, 3.15),
+                points = 1,
+                quiz_id = qid)
+```
+
+#### Multiple choice question
+
+A multiple choice question with one correct answer:
+
+```r
+create_question("Which of the following are prime numbers?",
+                answers = answer_mcq(c("2", "10", "12"), correct = "2"),
+                quiz_id = qid)
+```
+
+A multiple choice question with multiple correct answers:
+
+```r
+create_question("Which of the following are prime numbers?",
+                answers = answer_mcq(c("2", "3", "4", "5"), correct = c("2", "3", "5")),
+                quiz_id = qid)
+```
+
+#### True/False question
+
+```r
+create_question("The Earth is flat.",
+                answers = answer_true_false(FALSE),
+                quiz_id = qid)
+```
+
+#### Short answer question
+
+```r
+create_question("What is the capital of France?",
+                answers = answer_text("Paris"),
+                quiz_id = qid)
+```
+
+#### Essay question
+
+```r
+create_question("Describe the process of photosynthesis.",
+                answers = answer_essay(),
+                quiz_id = qid)
+```
+
+#### Matching question
+
+```r
+create_question("Match the following countries with their capitals.",
+                answers = answer_matching(
+                  left = c("France", "Japan", "Australia"),
+                  right = c("Paris", "Tokyo", "Canberra"),
+                  extra_choices = c("Madrid", "Beijing", "Wellington"),
+                ),
+                quiz_id = qid)
+```
+
+#### Multiple answers
+
+Selecting answers from multiple dropdowns:
+
+```r
+create_question(
+    "Roses are [color1], violets are [color2].",
+    answers = answer_multiple(
+      dropdown(
+        choices = c("red", "blue", "yellow"),
+        correct = "red",
+        id = "color1"
+      ),
+      dropdown(
+        choices = c("red", "blue", "yellow"),
+        correct = "blue",
+        id = "color2"
+      )
+    )
+  )
+```
+
+Fill in the blanks:
+
+```r
+create_question(
+    "Roses are [color1], violets are [color2].",
+    answers = answer_multiple(
+      fill_in_blank(correct = "red", id = "color1"),
+      fill_in_blank(correct = "blue", id = "color2")
+    )
+  )
+```
+
+#### Upload a file 
+
+```r
+create_question("Upload a file with your answer.",
+                answers = answer_upload_file(),
+                quiz_id = qid)
+```
+
+### Retrieving quiz data
+
+Quiz statistics:
+
+```r
+quiz_statistics(quiz_id = qid)
+```
+
+Quiz results with user information:
+
+```r
+quiz_results(quiz_id = qid)
+```
+
+Question-level statistics:
+
+```r
+quiz_submissions(quiz_id = qid)
+```
+
+
