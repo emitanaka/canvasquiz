@@ -76,7 +76,7 @@ create_question("What is 2 + 2?",
 The value match with a tolerance:
 
 ``` r
-create_question("What is square root of 2?",
+create_question("What is the square root of 2?",
                 answers = answer_num(sqrt(2), tol = 0.1),
                 points = 1,
                 quiz_id = qid)
@@ -85,7 +85,7 @@ create_question("What is square root of 2?",
 The value match with a specified number of decimal places:
 
 ``` r
-create_question("What is square root of 2?",
+create_question("What is the square root of 2?",
                 answers = answer_num_precision(sqrt(2), precision = 1),
                 points = 1,
                 quiz_id = qid)
@@ -149,7 +149,7 @@ create_question("Match the following countries with their capitals.",
                 answers = answer_matching(
                   left = c("France", "Japan", "Australia"),
                   right = c("Paris", "Tokyo", "Canberra"),
-                  extra_choices = c("Madrid", "Beijing", "Wellington"),
+                  extra_choices = c("Madrid", "Beijing", "Wellington")
                 ),
                 quiz_id = qid)
 ```
@@ -182,8 +182,8 @@ Fill in the blanks:
 create_question(
     "Roses are [color1], violets are [color2].",
     answers = answer_multiple(
-      fill_in_blank(correct = "red", id = "color1"),
-      fill_in_blank(correct = "blue", id = "color2")
+      fill_in_the_blank("red", id = "color1"),
+      fill_in_the_blank("blue", id = "color2")
     )
   )
 ```

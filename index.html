@@ -99,13 +99,13 @@
 <span>                quiz_id <span class="op">=</span> <span class="va">qid</span><span class="op">)</span></span></code></pre></div>
 <p>The value match with a tolerance:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/create_question.html">create_question</a></span><span class="op">(</span><span class="st">"What is square root of 2?"</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/create_question.html">create_question</a></span><span class="op">(</span><span class="st">"What is the square root of 2?"</span>,</span>
 <span>                answers <span class="op">=</span> <span class="fu"><a href="reference/answer_num.html">answer_num</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, tol <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span>
 <span>                points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                quiz_id <span class="op">=</span> <span class="va">qid</span><span class="op">)</span></span></code></pre></div>
 <p>The value match with a specified number of decimal places:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/create_question.html">create_question</a></span><span class="op">(</span><span class="st">"What is square root of 2?"</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/create_question.html">create_question</a></span><span class="op">(</span><span class="st">"What is the square root of 2?"</span>,</span>
 <span>                answers <span class="op">=</span> <span class="fu"><a href="reference/answer_num.html">answer_num_precision</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, precision <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                quiz_id <span class="op">=</span> <span class="va">qid</span><span class="op">)</span></span></code></pre></div>
@@ -162,7 +162,7 @@
 <span>                answers <span class="op">=</span> <span class="fu"><a href="reference/answer_matching.html">answer_matching</a></span><span class="op">(</span></span>
 <span>                  left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"France"</span>, <span class="st">"Japan"</span>, <span class="st">"Australia"</span><span class="op">)</span>,</span>
 <span>                  right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Paris"</span>, <span class="st">"Tokyo"</span>, <span class="st">"Canberra"</span><span class="op">)</span>,</span>
-<span>                  extra_choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Madrid"</span>, <span class="st">"Beijing"</span>, <span class="st">"Wellington"</span><span class="op">)</span>,</span>
+<span>                  extra_choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Madrid"</span>, <span class="st">"Beijing"</span>, <span class="st">"Wellington"</span><span class="op">)</span></span>
 <span>                <span class="op">)</span>,</span>
 <span>                quiz_id <span class="op">=</span> <span class="va">qid</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -191,8 +191,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_question.html">create_question</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Roses are [color1], violets are [color2]."</span>,</span>
 <span>    answers <span class="op">=</span> <span class="fu"><a href="reference/answer_multiple.html">answer_multiple</a></span><span class="op">(</span></span>
-<span>      <span class="fu">fill_in_blank</span><span class="op">(</span>correct <span class="op">=</span> <span class="st">"red"</span>, id <span class="op">=</span> <span class="st">"color1"</span><span class="op">)</span>,</span>
-<span>      <span class="fu">fill_in_blank</span><span class="op">(</span>correct <span class="op">=</span> <span class="st">"blue"</span>, id <span class="op">=</span> <span class="st">"color2"</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="reference/fill_in_the_blank.html">fill_in_the_blank</a></span><span class="op">(</span><span class="st">"red"</span>, id <span class="op">=</span> <span class="st">"color1"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="reference/fill_in_the_blank.html">fill_in_the_blank</a></span><span class="op">(</span><span class="st">"blue"</span>, id <span class="op">=</span> <span class="st">"color2"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 </div>
