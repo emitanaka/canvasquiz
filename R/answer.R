@@ -1,4 +1,49 @@
 
+#' Create an answer object for a quiz question
+#' 
+#' This function is a wrapper that creates the appropriate answer object based on the input. It can handle multiple choice questions, true/false questions, short answer questions, numerical questions (with exact answers, precision-based answers, or range-based answers), and matching questions. The function will automatically determine the type of question based on the format of the input and create the corresponding answer object using the appropriate helper functions.
+#' 
+#' @details The function uses the following logic to determine the type of question:
+#' - If `x` is a logical value and `y` is NULL, it creates a true/false question using `answer_true_false()`.
+#' - If `x` is a single numeric value and `y` is NULL, it creates a numerical question with an exact answer using `answer_num()`. If `tol` is greater than 0, it creates a numerical question with an error margin. If `precision` is greater than 0, it creates a numerical question with a specified precision.
+#' - If `x` is a numeric vector of length 2, it creates a numerical question with a range-based answer using `answer_num_range()`. Alternatively, if `x` is a single numeric value and `y` is a single numeric value, it also creates a numerical question with a range-based answer using `answer_num_range()`, where `x` is the lower bound and `y` is the upper bound.
+#' - If `x` is a named character vector, it creates a matching question using `answer_matching()`. Any extra choices for the matching question can be provided in `y`.
+#' - If `x` and `y` are character vectors, it creates a multiple choice question using `answer_mcq()`.
+#' - If the input format does not match any of the above cases, the function throws an error indicating that the answer format is unsupported.
+#' 
+#' @param x The correct answer(s) for the question. See details for the expected format based on the type of question.
+#' @param y Additional parameter for certain question types. See details for the expected format based on the type of question.
+#' @inheritParams answer_num_precision
+#' @inheritParams answer_num_range
+#' @family answer-functions
+#' @export
+answer_single <- function(x, y = NULL, tol = 0, precision = 0) {
+  if(is.logical(x) & is.null(y)) {
+    return(answer_true_false(x))
+  }
+  if(is.numeric(x) & length(x) == 1 & is.null(y)) {
+    if(tol > 0) {
+      return(answer_num(x, tol))
+    } else if(precision > 0) {
+      return(answer_num_precision(x, precision))
+    } 
+    return(answer_num(x))
+  }
+  if(is.numeric(x) & is.numeric(y)) {
+    return(answer_num_range(x, y))
+  }
+  if(is.numeric(x) & length(x) == 2) {
+    return(answer_num_range(x[1], x[2]))
+  }
+  if(is.character(x) & !is.null(names(x))) {
+    return(answer_matching(left = names(x), right = x, extra_choices = y))
+  }
+  if(is.character(x) & is.character(y)) {
+    return(answer_mcq(correct = x, choices = y))
+  }
+  cli::cli_abort("Unsupported answer format.")
+}
+
 #' Answer for a multiple choice question
 #'
 #' @param correct Character vector of correct answer(s). Should be one element for single-answer multiple choice questions and can be multiple elements for multiple-answer multiple choice questions.
@@ -147,7 +192,7 @@ answer_num_precision <- function(value, precision = 0L) {
 
 #' @rdname answer_num
 #' @export
-answer_num_range <- function(lower, upper) {
+answer_num_range <- function(lower, upper = lower) {
   structure(
     list(list(
       numerical_answer_type = "range_answer",
