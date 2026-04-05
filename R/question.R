@@ -52,7 +52,7 @@ create_question <- function(
     text_blank_ids <- regmatches(text, m = gregexpr("\\[.*?\\]", text))[[1]]
     text_blank_ids <- gsub("\\[|\\]", "", text_blank_ids)
     if (!all(text_blank_ids %in% answer_blank_ids)) {
-      cli::cli_abort(
+      cli::cli_alert_danger(
         "All blank ids in answers must be present in the question text as square bracketed text, e.g. `[blank1]` for blank id `blank1`. The following blank ids in the quesiton text do not have corresponding blank ids in the answers: {.val {setdiff(text_blank_ids, answer_blank_ids)}}."
       )
     }
@@ -153,13 +153,18 @@ create_question <- function(
 
 #' Answer for a multiple choice question
 #'
-#' @param choices Character vector of answer choices.
 #' @param correct Character vector of correct answer(s). Should be one element for single-answer multiple choice questions and can be multiple elements for multiple-answer multiple choice questions.
+#' @param choices Character vector of answer choices.
 #' @param multiple Logical. Whether the question allows multiple correct answers. Defaults to `TRUE` if `correct` has more than one element.
 #'
 #' @family answer-functions
 #' @export
-answer_mcq <- function(choices, correct, multiple = length(correct) > 1) {
+answer_mcq <- function(correct, choices, multiple = length(correct) > 1) {
+  if(!all(correct %in% choices)) {
+    cli::cli_abort(
+      "All correct answers must be included in the choices. The following correct answers are not in the choices: {.val {setdiff(correct, choices)}}."
+    )
+  }
   if (length(correct) == 1 & !multiple) {
     structure(
       lapply(choices, function(text) {
@@ -226,7 +231,7 @@ answer_multiple <- function(...) {
 #' @inheritParams answer_mcq
 #' @param blank_id The ID of the blank this dropdown corresponds to.
 #' @export
-dropdown <- function(choices, correct, id = NULL) {
+dropdown <- function(correct, choices, id = NULL) {
   lapply(choices, function(text) {
     weight <- ifelse(text == correct, 100, 0)
     list(
@@ -239,19 +244,19 @@ dropdown <- function(choices, correct, id = NULL) {
 }
 
 #' Create a fill-in-the-blank answer for a fill-in-multiple-blanks question
-#' @param text The correct answer text for this blank.
+#' @param correct The correct answer text for this blank.
 #' @param id The ID of the blank this answer corresponds to.
 #' @export
-fill_in_the_blank <- function(text, id = NULL) {
-  list(list(answer_text = text, blank_id = id, class = "fitb"))
+fill_in_the_blank <- function(correct, id = NULL) {
+  list(list(answer_text = correct, blank_id = id, class = "fitb"))
 }
 
 #' A short answer question
-#' @param text The correct answer text.
+#' @param correct The correct answer text.
 #' @family answer-functions
 #' @export
-answer_text <- function(text) {
-  structure(list(list(answer_text = text)), type = "short_answer_question")
+answer_text <- function(correct) {
+  structure(list(list(answer_text = correct)), type = "short_answer_question")
 }
 
 #' A numerical answer question with an exact answer
@@ -263,6 +268,11 @@ answer_text <- function(text) {
 #' @family answer-functions
 #' @export
 answer_num <- function(value, tol = 0) {
+  if(abs(value) < 0.0001 | tol < 0.0001) {
+    cli::cli_alert_warning(
+      "The answers are rounded to 4 decimal places. This means {.arg value} that are less than 0.0001 are rounded to 0 and {.arg tol} should be greater or equal to 0.0001. Consider using {.fn answer_num_precision()} with an appropriate precision instead."
+    )
+  }
   structure(
     list(list(
       numerical_answer_type = "exact_answer",
