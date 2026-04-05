@@ -20,6 +20,8 @@
   [`answer_num_precision()`](http://emitanaka.org/canvasquiz/reference/answer_num.md)
   [`answer_num_range()`](http://emitanaka.org/canvasquiz/reference/answer_num.md)
   : A numerical answer question with an exact answer
+- [`answer_single()`](http://emitanaka.org/canvasquiz/reference/answer_single.md)
+  : Create an answer object for a quiz question
 - [`answer_text()`](http://emitanaka.org/canvasquiz/reference/answer_text.md)
   : A short answer question
 - [`answer_true_false()`](http://emitanaka.org/canvasquiz/reference/answer_true_false.md)

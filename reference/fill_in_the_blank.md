@@ -5,12 +5,12 @@ Create a fill-in-the-blank answer for a fill-in-multiple-blanks question
 ## Usage
 
 ``` r
-fill_in_the_blank(text, id = NULL)
+fill_in_the_blank(correct, id = NULL)
 ```
 
 ## Arguments
 
-- text:
+- correct:
 
   The correct answer text for this blank.
 
