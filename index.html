@@ -51,6 +51,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 <p>The canvasquiz package provides functions to interact with the Canvas LMS API, specifically for constructing quizzes and retrieving quiz data. This package allows you to write the quizzes in R and directly push them to Canvas, as well as retrieve quiz statistics and results for analysis.</p>
+<p>Note that this package only supports Classic Quizzes in Canvas, not New Quizzes.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -122,12 +123,12 @@
 <p>A multiple choice question with one correct answer:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_question.html">create_question</a></span><span class="op">(</span><span class="st">"Which of the following are prime numbers?"</span>,</span>
-<span>                answers <span class="op">=</span> <span class="fu"><a href="reference/answer_mcq.html">answer_mcq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"10"</span>, <span class="st">"12"</span><span class="op">)</span>, correct <span class="op">=</span> <span class="st">"2"</span><span class="op">)</span>,</span>
+<span>                answers <span class="op">=</span> <span class="fu"><a href="reference/answer_mcq.html">answer_mcq</a></span><span class="op">(</span><span class="st">"2"</span>, choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"10"</span>, <span class="st">"12"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                quiz_id <span class="op">=</span> <span class="va">qid</span><span class="op">)</span></span></code></pre></div>
 <p>A multiple choice question with multiple correct answers:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_question.html">create_question</a></span><span class="op">(</span><span class="st">"Which of the following are prime numbers?"</span>,</span>
-<span>                answers <span class="op">=</span> <span class="fu"><a href="reference/answer_mcq.html">answer_mcq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span><span class="op">)</span>, correct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"5"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                answers <span class="op">=</span> <span class="fu"><a href="reference/answer_mcq.html">answer_mcq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"5"</span><span class="op">)</span>, choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                quiz_id <span class="op">=</span> <span class="va">qid</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
