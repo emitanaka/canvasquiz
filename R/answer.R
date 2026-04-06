@@ -64,7 +64,7 @@ answer_mcq <- function(correct, choices, multiple = length(correct) > 1) {
         weight <- ifelse(text == correct, 100, 0)
         list(answer_text = text, answer_weight = weight)
       }),
-      type = "multiple_choice_question"
+      class = "multiple_choice_question"
     )
   } else {
     structure(
@@ -72,7 +72,7 @@ answer_mcq <- function(correct, choices, multiple = length(correct) > 1) {
         weight <- ifelse(text %in% correct, 100, 0)
         list(answer_text = text, answer_weight = weight)
       }),
-      type = "multiple_answers_question"
+      class = "multiple_answers_question"
     )
   }
 }
@@ -85,8 +85,8 @@ answer_mcq <- function(correct, choices, multiple = length(correct) > 1) {
 answer_true_false <- function(correct = TRUE) {
   choices <- c("True", "False")
   correct <- ifelse(correct, "True", "False")
-  res <- answer_mcq(choices, correct)
-  attr(res, "type") <- "true_false_question"
+  res <- answer_mcq(correct, choices)
+  attr(res, "class") <- "true_false_question"
   res
 }
 
@@ -110,9 +110,9 @@ answer_multiple <- function(...) {
     cli::cli_abort("All answers must be of the same type.")
   }
   if (cls == "dropdown") {
-    structure(dots, type = "multiple_dropdowns_question")
+    structure(dots, class = "multiple_dropdowns_question")
   } else if (cls == "fitb") {
-    structure(dots, type = "fill_in_multiple_blanks_question")
+    structure(dots, class = "fill_in_multiple_blanks_question")
   } else {
     cli::cli_abort(
       "Multiple answers questions must be created with dropdown() or fill_in_the_blank() answer objects."
@@ -149,7 +149,7 @@ fill_in_the_blank <- function(correct, id = NULL) {
 #' @family answer-functions
 #' @export
 answer_text <- function(correct) {
-  structure(list(list(answer_text = correct)), type = "short_answer_question")
+  structure(list(list(answer_text = correct)), class = "short_answer_question")
 }
 
 #' A numerical answer question with an exact answer
@@ -161,7 +161,7 @@ answer_text <- function(correct) {
 #' @family answer-functions
 #' @export
 answer_num <- function(value, tol = 0) {
-  if(abs(value) < 0.0001 | tol < 0.0001) {
+  if(abs(value) < 0.0001 | (tol > 0 & tol < 0.0001)) {
     cli::cli_alert_warning(
       "The answers are rounded to 4 decimal places. This means {.arg value} that are less than 0.0001 are rounded to 0 and {.arg tol} should be greater or equal to 0.0001. Consider using {.fn answer_num_precision()} with an appropriate precision instead."
     )
@@ -172,7 +172,7 @@ answer_num <- function(value, tol = 0) {
       answer_exact = value,
       answer_error_margin = tol
     )),
-    type = "numerical_question"
+    class = c("numerical_question", "list")
   )
 }
 
@@ -186,7 +186,7 @@ answer_num_precision <- function(value, precision = 0L) {
       answer_approximate = value,
       answer_precision = precision
     )),
-    type = "numerical_question"
+    class = c("numerical_question", "list")
   )
 }
 
@@ -199,7 +199,7 @@ answer_num_range <- function(lower, upper = lower) {
       answer_range_start = lower,
       answer_range_end = upper
     )),
-    type = "numerical_question"
+    class = c("numerical_question", "list")
   )
 }
 
@@ -219,7 +219,7 @@ answer_matching <- function(left, right, extra_choices = "") {
   structure(
     ll,
     answer = list(left = left, right = right, extra_choices = extra_choices),
-    type = "matching_question"
+    class = c("matching_question", "list")
   )
 }
 
@@ -228,7 +228,7 @@ answer_matching <- function(left, right, extra_choices = "") {
 #' @family answer-functions
 #' @export
 answer_essay <- function() {
-  structure(list(), type = "essay_question")
+  structure(list(), class = c("essay_question", "list"))
 }
 
 #' A file upload question
@@ -236,7 +236,7 @@ answer_essay <- function() {
 #' @family answer-functions
 #' @export
 answer_upload_file <- function() {
-  structure(list(), type = "file_upload_question")
+  structure(list(), class = c("file_upload_question", "list"))
 }
 
 #' A text-only question with no answers
@@ -244,7 +244,7 @@ answer_upload_file <- function() {
 #' @family answer-functions
 #' @export
 answer_none <- function() {
-  structure(list(), type = "text_only_question")
+  structure(list(), class = c("text_only_question", "list"))
 }
 
 #' Answer for a fill-in-multiple-blanks question
@@ -259,6 +259,146 @@ answer_fill_in_multiple_blanks <- function(answers, blank_ids) {
       list(answer_text = answers[i], blank_id = blank_ids[i])
     }),
     answer = list(answers = answers, blank_ids = blank_ids),
-    type = "fill_in_multiple_blanks_question"
+    class = c("fill_in_multiple_blanks_question", "list")
   )
+}
+
+#' @export
+print.text_only_question <- function(x, ...) {
+  cli::cat_bullet("No specific answer", bullet_col = "green", bullet = "stop")
+}
+
+#' @export
+print.essay_question <- function(x, ...) {
+  cli::cat_bullet("No specific answer", bullet_col = "green", bullet = "double_line")
+}
+
+#' @export
+print.file_upload_question <- function(x, ...) {
+  cli::cat_bullet("No specific answer", bullet_col = "green", bullet = "square")
+}
+
+#' @export
+print.matching_question <- function(x, ...) {
+      left <- attr(x, "answer")$left
+      right <- attr(x, "answer")$right
+      extra_choices <- attr(x, "answer")$extra_choices
+      for (i in seq_along(left)) {
+        cli::cat_bullet(paste0(left[i], " → ", right[i]), bullet_col = "green", bullet = "tick")
+      }
+      if (length(extra_choices) > 0) {
+        cli::cli_alert_info(
+          "Extra choices: {paste(extra_choices, collapse = ', ')}"
+        )
+      }
+}
+
+#' @export
+print.numerical_question <- function(x, ...) {
+      type <- x[[1]]$numerical_answer_type
+      if (type == "exact_answer") {
+        cli::cat_bullet(paste0(
+          x[[1]]$answer_exact,
+          " ± ",
+          x[[1]]$answer_error_margin
+        ), bullet_col = "green", bullet = "tick")
+      } else if (type == "precision_answer") {
+        cli::cat_bullet(paste0(
+          x[[1]]$answer_approximate,
+          " with precision ",
+          x[[1]]$answer_precision
+        ), bullet_col = "green", bullet = "tick")
+      } else if (type == "range_answer") {
+        cli::cat_bullet(paste0(
+          x[[1]]$answer_range_start,
+          " to ",
+          x[[1]]$answer_range_end
+        ), bullet_col = "green", bullet = "tick")
+      }
+}
+
+#' @export
+print.short_answer_question <- function(x, ...) {
+  cli::cat_bullet(x[[1]]$answer_text, bullet_col = "green", bullet = "tick")
+}
+
+#' @export
+print.multiple_choice_question <- function(x, ...) {
+  for (i in seq_along(x)) {
+        ans <- x[[i]]
+        if (ans$answer_weight == 100) {
+          cli::cat_bullet(
+            ans$answer_text,
+            bullet_col = "green",
+            bullet = "tick"
+          )
+        } else {
+          cli::cat_bullet(ans$answer_text, bullet_col = "red", bullet = "cross")
+        }
+  }
+}
+
+#' @export
+print.multiple_answers_question <- function(x, ...) {
+  for (i in seq_along(x)) {
+        ans <- x[[i]]
+        if (ans$answer_weight == 100) {
+          cli::cat_bullet(
+            ans$answer_text,
+            bullet_col = "green",
+            bullet = "tick"
+          )
+        } else {
+          cli::cat_bullet(ans$answer_text, bullet_col = "red", bullet = "cross")
+        }
+  }
+}
+
+#' @export
+print.true_false_question <- function(x, ...) {
+  print.multiple_choice_question(x, ...)
+}
+
+#' @export
+print.multiple_dropdowns_question <- function(x, ...) {
+  blank_id_prev <- ""
+  for (i in seq_along(x)) {
+    ans <- x[[i]]
+    blank_id <- ans$blank_id
+    if(blank_id_prev != blank_id) {
+      cli::cat_bullet(cli::bg_br_white(cli::col_black(paste0("[", blank_id, "]"))), bullet_col = "blue", bullet = "arrow_right")
+      blank_id_prev <- blank_id
+    }
+    if (ans$answer_weight == 100) {
+      cli::cat_bullet(
+        ans$answer_text,
+        bullet_col = "green",
+        bullet = "tick"
+      )
+    } else {
+      cli::cat_bullet(
+        ans$answer_text,
+        bullet_col = "red",
+        bullet = "cross"
+      )
+    }
+  }
+}
+
+#' @export
+print.fill_in_multiple_blanks_question <- function(x, ...) {
+  blank_id_prev <- ""
+  for (i in seq_along(x)) {
+    ans <- x[[i]]
+    blank_id <- ans$blank_id
+    if(blank_id_prev != blank_id) {
+      blank_id_prev <- blank_id
+    }
+    cli::cat_bullet(
+      cli::bg_br_white(cli::col_black(paste0("[", blank_id, "]"))), ": ",
+      ans$answer_text,
+      bullet_col = "green",
+      bullet = "tick"
+    )
+  }
 }

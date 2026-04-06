@@ -32,7 +32,7 @@ create_question <- function(
   url = Sys.getenv("CANVASQUIZ_URL"),
   token = Sys.getenv("CANVASQUIZ_TOKEN")
 ) {
-  if (attr(answers, "type") == "matching_question") {
+  if (inherits(answers, "matching_question")) {
     matching_incorrect_options <- paste0(
       attr(answers, "answer")$extra_choices,
       collapse = "\n"
@@ -41,8 +41,7 @@ create_question <- function(
     matching_incorrect_options <- NULL
   }
   if (
-    attr(answers, "type") %in%
-      c("multiple_dropdowns_question", "fill_in_multiple_blanks_question")
+    inherits(answers, c("multiple_dropdowns_question", "fill_in_multiple_blanks_question"))
   ) {
     answer_blank_ids <- unique(vapply(
       answers,
@@ -64,13 +63,13 @@ create_question <- function(
         question_name = title,
         question_text = text,
         #quiz_group_id = quiz_group_id,
-        question_type = attr(answers, "type"),
+        question_type = class(answers)[1],
         position = position,
         points_possible = points,
         correct_comments = correct_comments,
         incorrect_comments = incorrect_comments,
         neutral_comments = neutral_comments,
-        answers = answers,
+        answers = unclass(answers),
         matching_answer_incorrect_matches = matching_incorrect_options
       )
     )) |>
@@ -79,78 +78,55 @@ create_question <- function(
 
   set_last_question_id(q$id)
 
-  if (is.null(title)) {
-    cli::cli_alert_info("Question added to quiz ID {.val {quiz_id}}.")
-  } else {
-    cli::cli_alert_info(
-      "Question {.val {title}} added to quiz ID {.val {quiz_id}}."
-    )
-  }
-  cli::cat_boxx(
-    text,
-    header = "Question",
-    padding = 0,
-    background_col = "red",
-    col = "white"
-  )
-  cli::cli_text(cli::col_white(cli::bg_br_blue("Answer ({points} point{?s}):")))
-  switch(
-    attr(answers, "type"),
-    multiple_choice_question = {
-      for (i in seq_along(answers)) {
-        ans <- answers[[i]]
-        if (ans$answer_weight == 100) {
-          cli::cat_bullet(
-            ans$answer_text,
-            bullet_col = "green",
-            bullet = "tick"
-          )
-        } else {
-          cli::cat_bullet(ans$answer_text, bullet_col = "red", bullet = "cross")
-        }
-      }
-    },
-    short_answer_question = {
-      cli::cat_bullet(answers[[1]]$answer_text)
-    },
-    numerical_question = {
-      type <- answers[[1]]$numerical_answer_type
-      if (type == "exact_answer") {
-        cli::cat_bullet(paste0(
-          answers[[1]]$answer_exact,
-          " ± ",
-          answers[[1]]$answer_error_margin
-        ))
-      } else if (type == "precision_answer") {
-        cli::cat_bullet(paste0(
-          answers[[1]]$answer_approximate,
-          " with precision ",
-          answers[[1]]$answer_precision
-        ))
-      } else if (type == "range_answer") {
-        cli::cat_bullet(paste0(
-          answers[[1]]$answer_range_start,
-          " to ",
-          answers[[1]]$answer_range_end
-        ))
-      }
-    },
-    matching_question = {
-      left <- attr(answers, "answer")$left
-      right <- attr(answers, "answer")$right
-      extra_choices <- attr(answers, "answer")$extra_choices
-      for (i in seq_along(left)) {
-        cli::cat_bullet(paste0(left[i], " → ", right[i]))
-      }
-      if (length(extra_choices) > 0) {
-        cli::cli_alert_info(
-          "Extra choices: {paste(extra_choices, collapse = ', ')}"
-        )
-      }
-    }
-  )
+  structure(list(
+    question_id = q$id,
+    quiz_id = quiz_id,
+    text = text,
+    answers = answers,
+    points = points,
+    position = position,
+    title = title,
+    correct_comments = correct_comments,
+    incorrect_comments = incorrect_comments,
+    neutral_comments = neutral_comments
+  ), class = "canvas_question")
 }
 
+#' @export
+print.canvas_question <- function(x, ...) {
+  if (is.null(x$title)) {
+    cli::cli_alert_info("Question added to quiz ID {.val {x$quiz_id}}.")
+  } else {
+    cli::cli_alert_info(
+      "Question {.val {x$title}} added to quiz ID {.val {x$quiz_id}}."
+    )
+  }
+
+  cli::cat_boxx(
+    x$text,
+    header = "Question",
+    padding = 0#,
+    #background_col = "red",
+    #col = "white"
+  )
+  #cli::cli_text(cli::col_white(cli::bg_br_blue("Answer ({x$points} point{?s}):")))
+  question_type <- switch(class(x$answers)[1],
+    "multiple_choice_question" = "Multiple Choice",
+    "multiple_answers_question" = "Multiple Answers",
+    "short_answer_question" = "Short Answer",
+    "numerical_question" = "Numerical Answer",
+    "matching_question" = "Matching",
+    "essay_question" = "Essay",
+    "file_upload_question" = "File Upload",
+    "text_only_question" = "Text Only",
+    "true_false_question" = "True/False",
+    "multiple_dropdowns_question" = "Multiple Dropdowns",
+    "fill_in_multiple_blanks_question" = "Fill in Multiple Blanks",
+    "Unknown Question Type"
+  )
+  cli::cli_text(cli::style_bold(question_type), " ", cli::style_reset("({x$points} point{?s}):"))
+  print(x$answers)
+}
 
 #' Update a quiz question
 #'
