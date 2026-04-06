@@ -279,27 +279,6 @@ list_quizzes <- function(
     dplyr::bind_rows()
 }
 
-#' List quiz questions in a course
-#'
-#' @inheritParams quiz_questions
-#' @return A data frame of quiz questions with their details.
-#' @export
-list_questions <- function(
-  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
-  url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN")
-) {
-  qids <- list_quizzes(course_id)$id
-  lapply(qids, function(quiz_id) {
-    quizzes_url(course_id, url, token) |>
-      httr2::req_url_path_append(paste0(quiz_id, "/questions")) |>
-      httr2::req_perform() |>
-      httr2::resp_body_json() |>
-      dplyr::bind_rows()
-  }) |>
-    dplyr::bind_rows()
-}
-
 
 #' Delete all quizzes
 #' 
@@ -330,93 +309,13 @@ delete_all_quizzes <- function(
   }
 }
 
-#' Add questions from a question bank to a quiz
-#'
-#' @param quiz_id The id of the quiz to add questions to.
-#' @param bank_id The id of the question bank to pull questions from.
-#' @param title (Optional) The title of the quiz group to create for these questions. If `NULL` (default), no quiz group will be created and questions will be added to the quiz without a group.
-#' @param n The number of questions to randomly select from the question bank. Defaults to `1`.
-#' @param points The number of points each question added from the bank should be worth. Defaults to `1`.
-#' @param course_id The course id. Defaults to the value of the `CANVASQUIZ_COURSE_ID` environment variable.
-#' @param url The canvas url. Defaults to the value of the `CANVASQUIZ_URL` environment variable.
-#' @param token The canvas token. Defaults to the value of the `CANVASQUIZ_TOKEN` environment variable.
-#' @return The API response from adding the questions.
-add_question_from_bank <- function(
-  quiz_id,
-  bank_id,
-  title = NULL,
-  n = 1L,
-  points = 1L,
-  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
-  url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN")
-) {
+
+quiz_info <- function(quiz_id, 
+                      course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
+                      url = Sys.getenv("CANVASQUIZ_URL"), 
+                      token = Sys.getenv("CANVASQUIZ_TOKEN")) {
   quizzes_url(course_id, url, token) |>
-    httr2::req_url_path_append(paste0(quiz_id, "/groups")) |>
-    httr2::req_body_json(list(
-      quiz_groups = list(list(
-        name = title,
-        pick_count = n,
-        question_points = points,
-        assessment_question_bank_id = bank_id
-      ))
-    )) |>
-    httr2::req_perform()
-
-  cli::cli_inform(
-    "Added {n} question{?s} from bank ID {.val bank_id} to quiz ID {.val quiz_id}."
-  )
-}
-
-
-#' List the folder in a course
-#' @inheritParams quiz_questions
-#' @export
-list_folder <- function(
-  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
-  url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN")
-) {
-  course_url(course_id) |>
-    httr2::req_url_path_append("folders/") |>
-    httr2::req_perform() |>
-    httr2::resp_body_json() |>
-    dplyr::bind_rows()
-}
-
-#' Upload a file to a folder
-#' @param file The path to the file to upload.
-#' @param folder_id The ID of the folder to upload the file to.
-#' @inheritParams quiz_questions
-#' @export
-upload_file <- function(
-  file,
-  folder_id,
-  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
-  url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN")
-) {
-  resp <- canvas_url(course_id, url, token) |>
-    httr2::req_url_path_append("folders", folder_id, "files/") |>
-    httr2::req_body_json(list(
-      name = basename(file),
-      size = file.size(file),
-      parent_folder_id = folder_id,
-      on_duplicate = "overwrite"
-    )) |>
+    httr2::req_url_path_append(quiz_id) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
-
-  upload_url <- resp |>
-    pluck("upload_url")
-
-  upload_param <- resp |>
-    pluck("upload_params")
-
-  httr2::request(upload_url) |>
-    httr2::req_body_multipart(!!!upload_param, file = curl::form_file(file)) |>
-    httr2::req_perform() |>
-    httr2::resp_body_json()
-
-  cli::cli_inform("File {.val file} uploaded to folder ID {.val folder_id}.")
 }
