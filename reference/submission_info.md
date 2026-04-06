@@ -11,6 +11,13 @@ submission_info(
   url = Sys.getenv("CANVASQUIZ_URL"),
   token = Sys.getenv("CANVASQUIZ_TOKEN")
 )
+
+submission_overview(
+  submission_id,
+  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
+  url = Sys.getenv("CANVASQUIZ_URL"),
+  token = Sys.getenv("CANVASQUIZ_TOKEN")
+)
 ```
 
 ## Arguments
