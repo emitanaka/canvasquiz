@@ -2,9 +2,17 @@
 % Please edit documentation in R/grade.R
 \name{submission_info}
 \alias{submission_info}
+\alias{submission_overview}
 \title{Get quiz submission details}
 \usage{
 submission_info(
+  submission_id,
+  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
+  url = Sys.getenv("CANVASQUIZ_URL"),
+  token = Sys.getenv("CANVASQUIZ_TOKEN")
+)
+
+submission_overview(
   submission_id,
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),
