@@ -4,6 +4,7 @@
 #' @param submission_id The ID of the quiz submission to retrieve details for.
 #' @inheritParams quiz_questions
 #' @family submissions
+#' @return A data frame with submission id, quiz id, question name, question type, question text, whether the question was flagged, whether the question was correct, assessment question id, quiz group id, and the answers provided.
 #' @export
 submission_info <- function(submission_id, 
                             course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
@@ -26,7 +27,11 @@ submission_info <- function(submission_id,
     )
 }
 
-#' @rdname submission_info
+#' Get quiz submission overview
+#' 
+#' @inheritParams submission_info
+#' @family submissions
+#' @return A data frame with the name of the user, quiz title, score, attempt number, quiz id, and submission id.
 #' @export
 submission_overview <- function(submission_id, 
                                 course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
@@ -138,7 +143,6 @@ submission_update <- function(submission_id,
   } else {
     update_list <- setNames(list(list(score = score, comment = comment)), question_id)
   }
-  cli::cli_inform("Updating submission {.val {submission_id}} for {.val {details$name}} on quiz {.val {details$quiz}} (attempt {.val {details$attempt}}, current score: {.val {details$score}}).")
   
   quizzes_url(course_id, url, token) |>
     httr2::req_url_path_append(paste0(quiz_id, "/submissions/", submission_id)) |>
@@ -146,6 +150,8 @@ submission_update <- function(submission_id,
                                                            fudge_points = fudge_points, 
                                                            questions = update_list)))) |> 
     httr2::req_method("PUT") |> 
-    httr2::req_perform() |> 
+    httr2::req_perform() |>  
     httr2::resp_body_json() 
+
+  cli::cli_inform("Updated submission {.val {submission_id}} for {.val {details$name}} on quiz {.val {details$quiz}} (attempt {.val {details$attempt}}, current score: {.val {details$score}}).")
 }
