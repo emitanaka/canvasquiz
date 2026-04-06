@@ -326,14 +326,14 @@ print.short_answer_question <- function(x, ...) {
 print.multiple_choice_question <- function(x, ...) {
   for (i in seq_along(x)) {
         ans <- x[[i]]
-        if (ans$answer_weight == 100) {
+        if ((ans$answer_weight %||% ans$weight) == 100) {
           cli::cat_bullet(
-            ans$answer_text,
+            ans$answer_text %||% ans$text,
             bullet_col = "green",
             bullet = "tick"
           )
         } else {
-          cli::cat_bullet(ans$answer_text, bullet_col = "red", bullet = "cross")
+          cli::cat_bullet(ans$answer_text %||% ans$text, bullet_col = "red", bullet = "cross")
         }
   }
 }
