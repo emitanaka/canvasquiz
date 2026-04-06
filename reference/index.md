@@ -87,8 +87,13 @@
 - [`quiz_submissions()`](http://emitanaka.org/canvasquiz/reference/quiz_submissions.md)
   : Get quiz submissions with question-level answers
 - [`submission_info()`](http://emitanaka.org/canvasquiz/reference/submission_info.md)
-  [`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_info.md)
   : Get quiz submission details
+- [`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_overview.md)
+  : Get quiz submission overview
+- [`submission_questions()`](http://emitanaka.org/canvasquiz/reference/submission_questions.md)
+  : List attempted questions for a quiz
+- [`submission_update()`](http://emitanaka.org/canvasquiz/reference/submission_update.md)
+  : Update a quiz submission
 - [`update_question()`](http://emitanaka.org/canvasquiz/reference/update_question.md)
   : Update a quiz question
 - [`upload_file()`](http://emitanaka.org/canvasquiz/reference/upload_file.md)

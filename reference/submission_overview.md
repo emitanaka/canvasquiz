@@ -1,25 +1,23 @@
-# List quiz submissions
+# Get quiz submission overview
 
-List quiz submissions
+Get quiz submission overview
 
 ## Usage
 
 ``` r
-list_submissions(
-  quiz_id,
+submission_overview(
+  submission_id,
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN"),
-  n = count_submissions(quiz_id, course_id, url, token),
-  tz = Sys.timezone()
+  token = Sys.getenv("CANVASQUIZ_TOKEN")
 )
 ```
 
 ## Arguments
 
-- quiz_id:
+- submission_id:
 
-  The ID of the quiz to retrieve statistics for.
+  The ID of the quiz submission to retrieve details for.
 
 - course_id:
 
@@ -36,18 +34,14 @@ list_submissions(
   The canvas token. Defaults to the value of the `CANVASQUIZ_TOKEN`
   environment variable.
 
-- n:
+## Value
 
-  The maximum number of quiz submissions to retrieve.
-
-- tz:
-
-  The timezone to use for the started_at and finished_at columns.
-  Defaults to the system timezone.
+A data frame with the name of the user, quiz title, score, attempt
+number, quiz id, and submission id.
 
 ## See also
 
 Other submissions:
+[`list_submissions()`](http://emitanaka.org/canvasquiz/reference/list_submissions.md),
 [`submission_info()`](http://emitanaka.org/canvasquiz/reference/submission_info.md),
-[`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_overview.md),
 [`submission_questions()`](http://emitanaka.org/canvasquiz/reference/submission_questions.md)
