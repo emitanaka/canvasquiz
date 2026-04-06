@@ -68,9 +68,12 @@
 - [`list_pages()`](http://emitanaka.org/canvasquiz/reference/list_pages.md)
   : List pages in a course
 - [`list_questions()`](http://emitanaka.org/canvasquiz/reference/list_questions.md)
+  [`list_question_groups()`](http://emitanaka.org/canvasquiz/reference/list_questions.md)
   : List quiz questions in a course
 - [`list_quizzes()`](http://emitanaka.org/canvasquiz/reference/list_quizzes.md)
   : List quizzes in a course
+- [`list_submissions()`](http://emitanaka.org/canvasquiz/reference/list_submissions.md)
+  : List quiz submissions
 - [`md()`](http://emitanaka.org/canvasquiz/reference/md.md) : Convert
   Markdown to HTML
 - [`quiz_questions()`](http://emitanaka.org/canvasquiz/reference/quiz_questions.md)
@@ -83,6 +86,8 @@
   : Get quiz statistics
 - [`quiz_submissions()`](http://emitanaka.org/canvasquiz/reference/quiz_submissions.md)
   : Get quiz submissions with question-level answers
+- [`submission_info()`](http://emitanaka.org/canvasquiz/reference/submission_info.md)
+  : Get quiz submission details
 - [`update_question()`](http://emitanaka.org/canvasquiz/reference/update_question.md)
   : Update a quiz question
 - [`upload_file()`](http://emitanaka.org/canvasquiz/reference/upload_file.md)

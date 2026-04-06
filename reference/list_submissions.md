@@ -1,22 +1,17 @@
-# List quiz questions in a course
+# List quiz submissions
 
-List quiz questions in a course
+List quiz submissions
 
 ## Usage
 
 ``` r
-list_questions(
-  quiz_id = NULL,
-  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
-  url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN")
-)
-
-list_question_groups(
+list_submissions(
   quiz_id,
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN")
+  token = Sys.getenv("CANVASQUIZ_TOKEN"),
+  n = count_submissions(quiz_id, course_id, url, token),
+  tz = Sys.timezone()
 )
 ```
 
@@ -24,7 +19,7 @@ list_question_groups(
 
 - quiz_id:
 
-  The id of the quiz to retrieve questions from.
+  The ID of the quiz to retrieve statistics for.
 
 - course_id:
 
@@ -41,6 +36,11 @@ list_question_groups(
   The canvas token. Defaults to the value of the `CANVASQUIZ_TOKEN`
   environment variable.
 
-## Value
+- n:
 
-A data frame of quiz questions with their details.
+  The maximum number of quiz submissions to retrieve.
+
+- tz:
+
+  The timezone to use for the started_at and finished_at columns.
+  Defaults to the system timezone.
