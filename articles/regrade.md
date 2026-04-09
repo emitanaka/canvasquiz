@@ -23,7 +23,7 @@ library(canvasquiz)
 
 Before you can use the functions in this vignette, you need to set up
 your environment variables for the Canvas API. See the [setup
-vignette](http://emitanaka.org/canvasquiz/articles/setup.Rmd) for
+vignette](http://emitanaka.org/canvasquiz/articles/setup.md) for
 instructions on how to do this.
 
 ## Step 1: Get the quiz ID
