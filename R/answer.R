@@ -72,7 +72,7 @@ answer_mcq <- function(correct, choices, multiple = length(correct) > 1) {
         weight <- ifelse(text %in% correct, 100, 0)
         list(answer_text = text, answer_weight = weight)
       }),
-      class = "multiple_answers_question"
+      class = c("multiple_answers_question", "canvas_answer", "list")
     )
   }
 }
@@ -86,7 +86,7 @@ answer_true_false <- function(correct = TRUE) {
   choices <- c("True", "False")
   correct <- ifelse(correct, "True", "False")
   res <- answer_mcq(correct, choices)
-  attr(res, "class") <- "true_false_question"
+  attr(res, "class") <- c("true_false_question", "canvas_answer", "list")
   res
 }
 
@@ -110,9 +110,9 @@ answer_multiple <- function(...) {
     cli::cli_abort("All answers must be of the same type.")
   }
   if (cls == "dropdown") {
-    structure(dots, class = "multiple_dropdowns_question")
+    structure(dots, class = c("multiple_dropdowns_question", "canvas_answer", "list"))
   } else if (cls == "fitb") {
-    structure(dots, class = "fill_in_multiple_blanks_question")
+    structure(dots, class = c("fill_in_multiple_blanks_question", "canvas_answer", "list"))
   } else {
     cli::cli_abort(
       "Multiple answers questions must be created with dropdown() or fill_in_the_blank() answer objects."
@@ -149,7 +149,7 @@ fill_in_the_blank <- function(correct, id = NULL) {
 #' @family answer-functions
 #' @export
 answer_text <- function(correct) {
-  structure(list(list(answer_text = correct)), class = "short_answer_question")
+  structure(list(list(answer_text = correct)), class = c("short_answer_question", "canvas_answer", "list"))
 }
 
 #' A numerical answer question with an exact answer
@@ -172,7 +172,7 @@ answer_num <- function(value, tol = 0) {
       answer_exact = value,
       answer_error_margin = tol
     )),
-    class = c("numerical_question", "list")
+    class = c("numerical_question", "canvas_answer", "list")
   )
 }
 
@@ -186,7 +186,7 @@ answer_num_precision <- function(value, precision = 0L) {
       answer_approximate = value,
       answer_precision = precision
     )),
-    class = c("numerical_question", "list")
+    class = c("numerical_question", "canvas_answer", "list")
   )
 }
 
@@ -199,7 +199,7 @@ answer_num_range <- function(lower, upper = lower) {
       answer_range_start = lower,
       answer_range_end = upper
     )),
-    class = c("numerical_question", "list")
+    class = c("numerical_question", "canvas_answer", "list")
   )
 }
 
@@ -219,7 +219,7 @@ answer_matching <- function(left, right, extra_choices = "") {
   structure(
     ll,
     answer = list(left = left, right = right, extra_choices = extra_choices),
-    class = c("matching_question", "list")
+    class = c("matching_question", "canvas_answer", "list")
   )
 }
 
@@ -228,7 +228,7 @@ answer_matching <- function(left, right, extra_choices = "") {
 #' @family answer-functions
 #' @export
 answer_essay <- function() {
-  structure(list(), class = c("essay_question", "list"))
+  structure(list(), class = c("essay_question", "canvas_answer", "list"))
 }
 
 #' A file upload question
@@ -236,7 +236,7 @@ answer_essay <- function() {
 #' @family answer-functions
 #' @export
 answer_upload_file <- function() {
-  structure(list(), class = c("file_upload_question", "list"))
+  structure(list(), class = c("file_upload_question", "canvas_answer", "list"))
 }
 
 #' A text-only question with no answers
@@ -244,7 +244,7 @@ answer_upload_file <- function() {
 #' @family answer-functions
 #' @export
 answer_none <- function() {
-  structure(list(), class = c("text_only_question", "list"))
+  structure(list(), class = c("text_only_question", "canvas_answer", "list"))
 }
 
 #' Answer for a fill-in-multiple-blanks question
@@ -259,7 +259,7 @@ answer_fill_in_multiple_blanks <- function(answers, blank_ids) {
       list(answer_text = answers[i], blank_id = blank_ids[i])
     }),
     answer = list(answers = answers, blank_ids = blank_ids),
-    class = c("fill_in_multiple_blanks_question", "list")
+    class = c("fill_in_multiple_blanks_question", "canvas_answer", "list")
   )
 }
 
