@@ -20,6 +20,9 @@ jobs:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      CANVASQUIZ_URL: ${{ secrets.CANVASQUIZ_URL }}
+      CANVASQUIZ_TOKEN: ${{ secrets.CANVASQUIZ_TOKEN }}
+      CANVASQUIZ_COURSE_ID: ${{ secrets.CANVASQUIZ_COURSE_ID }}
     permissions:
       contents: write
     steps:
