@@ -31,6 +31,7 @@ List quiz submissions
 }
 \seealso{
 Other submissions: 
+\code{\link{list_attempted_questions}()},
 \code{\link{submission_info}()},
 \code{\link{submission_overview}()},
 \code{\link{submission_questions}()}

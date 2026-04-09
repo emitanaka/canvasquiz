@@ -17,13 +17,20 @@ submission_info <- function(submission_id,
     pluck(1) |> 
     lapply(function(x) {
       x$correct <- as.character(x$correct)
+      if("answers" %in% names(x)) {
+        x$answers <- list(x$answers)
+      }
+      if(!"quiz_group_id" %in% names(x)) {
+        x$quiz_group_id <- NA
+      }
       x
     }) |> 
     dplyr::bind_rows() |> 
     dplyr::arrange(position) |> 
     dplyr::summarise(
       answers = list(answers),
-      .by = c(id, quiz_id, position, question_name, question_type, question_text, flagged, correct, assessment_question_id, quiz_group_id)
+      # quiz_group_id omitted -- seems like it doesn't exist when no quiz group
+      .by = c(id, quiz_id, position, question_name, question_type, question_text, flagged, correct, assessment_question_id)
     )
 }
 
@@ -36,7 +43,7 @@ submission_info <- function(submission_id,
 submission_overview <- function(submission_id, 
                                 course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
                                 url = Sys.getenv("CANVASQUIZ_URL"), 
-                                token = Sys.getenv("CANVASQUIZ_TOKEN")) {
+                                 token = Sys.getenv("CANVASQUIZ_TOKEN")) {
   quiz_id <- submission_info(submission_id, course_id, url, token) |>
     pluck("quiz_id") |> 
     pluck(1)
@@ -77,10 +84,16 @@ list_submissions <- function(quiz_id,
       dplyr::bind_rows()
   }
   resp <- resp1 <- get_submissions_page(ipage <- 1)
+  if(nrow(resp) == 0) {
+    cli::cli_abort("No submissions found for quiz {.val {quiz_id}}.")
+  }
   while (nrow(resp1) == 100 & nrow(resp) < n) {
     resp1 <- get_submissions_page(ipage <- ipage + 1)
     resp <- dplyr::bind_rows(resp, resp1)
   }
+  if(!"end_at" %in% colnames(resp)) resp$end_at <- NA
+  if(!"finished_at" %in% colnames(resp)) resp$finished_at <- NA
+  if(!"started_at" %in% colnames(resp)) resp$started_at <- NA
   out <- resp |> 
     dplyr::mutate(across(c(started_at, finished_at, end_at), \(x) as.POSIXct(x, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")))
   attr(out$started_at, "tzone") <- tz
@@ -114,6 +127,7 @@ submission_questions <- function(submission_id,
     dplyr::arrange(position) |> 
     dplyr::mutate(submission_id = submission_id)
 }
+
 
 
 #' Update a quiz submission
@@ -153,5 +167,5 @@ submission_update <- function(submission_id,
     httr2::req_perform() |>  
     httr2::resp_body_json() 
 
-  cli::cli_inform("Updated submission {.val {submission_id}} for {.val {details$name}} on quiz {.val {details$quiz}} (attempt {.val {details$attempt}}, current score: {.val {details$score}}).")
+  cli::cli_inform("Updated submission {.val {submission_id}} for {.val {details$name}} on quiz {.val {details$quiz}} (attempt {.val {details$attempt}}, score before regrade: {.val {details$score}}).")
 }

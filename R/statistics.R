@@ -63,14 +63,10 @@ quiz_submissions <- function(
     return(data.frame())
   }
   ## Get the answer for each question
-  ass_id <- quizzes_url(course_id) |>
-    httr2::req_url_path_append(quiz_id) |>
-    httr2::req_perform() |>
-    httr2::resp_body_json() |>
-    pluck("assignment_id")
+  ass_id <- assignment_id(quiz_id, course_id, url, token)
 
   get_page_answers <- function(page) {
-    submissions <- course_url(course_id) |>
+    submissions <- course_url(course_id, url, token) |>
       httr2::req_url_path_append(paste0(
         "assignments/",
         ass_id,
@@ -101,11 +97,12 @@ quiz_submissions <- function(
             is.logical(a$correct)
           }, logical(1))] |>
             dplyr::bind_rows() |>
-            dplyr::mutate(qnum = 1:dplyr::n())
+            dplyr::mutate(qnum = 1:dplyr::n()) |> 
+            dplyr::mutate(submission_id = .x$id)
         }
       )
     ) |>
-    dplyr::select(user_id, answers) |>
+    #dplyr::select(user_id, answers) |>
     tidyr::unnest_longer(answers) |>
     tidyr::unnest_wider(answers)
 }

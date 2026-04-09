@@ -22,6 +22,7 @@ List attempted questions for a quiz
 }
 \seealso{
 Other submissions: 
+\code{\link{list_attempted_questions}()},
 \code{\link{list_submissions}()},
 \code{\link{submission_info}()},
 \code{\link{submission_overview}()}

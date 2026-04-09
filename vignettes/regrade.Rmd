@@ -1,0 +1,57 @@
+---
+title: "Regrading quiz submissions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{regrade}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Canvas quizzes have limited support in regrading quiz submissions for numerical answers. Where the original answer was wrong, there is no way to regrade the existing submissions upon changing the answer to the question. In this case, the grader will have to manually update the score for each submission. Since the submission will continue to be marked wrong, it is also recommended to leave a comment for the student. 
+
+
+
+
+```{r setup}
+library(canvasquiz)
+```
+
+## Step 0: Set up the environment
+
+Before you can use the functions in this vignette, you need to set up your environment variables for the Canvas API. See the [setup vignette](setup.Rmd) for instructions on how to do this.
+
+## Step 1: Get the quiz ID 
+
+You can find the quiz ID from the URL of the quiz. For example, if the quiz URL is `https://canvas.instructure.com/courses/123/quizzes/456`, then the quiz ID is `456`. You can also use the `list_quizzes()` function to get a list of quizzes and their IDs.
+
+```{r get-quiz-id}
+list_quizzes()
+```
+
+## Step 2: Get the question ID for the question you want to regrade
+
+After identifying the quiz ID, you can use the `list_attempted_questions()` function to get a list of attempted questions for that quiz, along with their question IDs and submission IDs. You will need to identify the question ID for the question you want to regrade.
+
+```{r}
+list_attempted_questions(quiz_id = 23542)
+```
+
+## Step 3: Regrade the submissions
+
+Let's say you want to regrade question ID `238187` for quiz ID `23542` for all those that entered the value `7`. The `regrade()` function will modify the score, comment, or fudge points for all submissions that match the specified answer. 
+
+```{r}
+regrade(question_id = 238187, 
+        quiz_id = 23542, 
+        answer = 7, # this was supposed to be the correct answer
+        fudge_points = 2, 
+        score = 2, 
+        comment = "Regraded to 2 points since the answer is correct.")
+```

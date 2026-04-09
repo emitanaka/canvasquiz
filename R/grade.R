@@ -1,5 +1,9 @@
 
-
+#' List attempted questions for a quiz
+#' 
+#' @inheritParams submission_info
+#' @family submissions
+#' @export
 list_attempted_questions <- function(quiz_id, 
                                      course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
                                      url = Sys.getenv("CANVASQUIZ_URL"), 
@@ -14,6 +18,53 @@ list_attempted_questions <- function(quiz_id,
                      .by = c(question_id, quiz_id, position, question_name, question_type, question_text)) |> 
     dplyr::arrange(position)
   
+}
+
+#' Regrade quiz submissions based on answer
+#' @inheritParams submission_update
+#' @param question_id The ID of the question to regrade.
+#' @param answer The answer to regrade. Can be numeric or character. 
+#' @export
+regrade <- function(question_id, 
+                    quiz_id, 
+                    answer = NULL,
+                    tol = 0,
+                    fudge_points = NULL,
+                    score = NULL,
+                    comment = NULL,
+                    course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
+                    url = Sys.getenv("CANVASQUIZ_URL"), 
+                    token = Sys.getenv("CANVASQUIZ_TOKEN")) {
+  n <- count_submissions(quiz_id, course_id, url, token)
+  subs <- quiz_submissions(quiz_id, n = max(c(1, n))) |> 
+    dplyr::filter(.data$question_id == .env$question_id)
+  if(is.numeric(answer)) {
+    subs <- subs |> 
+      dplyr::mutate(answer_text = as.numeric(text))
+  } else {
+    subs <- subs |> 
+      dplyr::mutate(answer_text = text)
+  }
+  sub_ids <- subs |> 
+    dplyr::filter(
+      if(is.numeric(answer)) {
+        abs(answer_text - answer) <= tol
+      } else {
+        answer_text == answer
+      }
+    ) |> 
+    dplyr::pull(submission_id)  
+
+  for(sub_id in sub_ids) {
+    submission_update(submission_id = sub_id, 
+                      fudge_points = fudge_points,
+                      question_id = question_id,
+                      score = score,
+                      comment = comment,
+                      course_id = course_id, 
+                      url = url, 
+                      token = token)
+  }
 }
 
 
