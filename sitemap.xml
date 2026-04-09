@@ -2,6 +2,9 @@
 <url><loc>http://emitanaka.org/canvasquiz/404.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/LICENSE-text.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/LICENSE.html</loc></url>
+<url><loc>http://emitanaka.org/canvasquiz/articles/index.html</loc></url>
+<url><loc>http://emitanaka.org/canvasquiz/articles/regrade.html</loc></url>
+<url><loc>http://emitanaka.org/canvasquiz/articles/setup.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/authors.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/index.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/add_question_from_bank.html</loc></url>
@@ -29,6 +32,7 @@
 <url><loc>http://emitanaka.org/canvasquiz/reference/fill_in_the_blank.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/index.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/last-ids.html</loc></url>
+<url><loc>http://emitanaka.org/canvasquiz/reference/list_attempted_questions.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/list_files.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/list_folder.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/list_pages.html</loc></url>
@@ -41,6 +45,7 @@
 <url><loc>http://emitanaka.org/canvasquiz/reference/quiz_results_summary.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/quiz_statistics.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/quiz_submissions.html</loc></url>
+<url><loc>http://emitanaka.org/canvasquiz/reference/regrade.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/submission_info.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/submission_overview.html</loc></url>
 <url><loc>http://emitanaka.org/canvasquiz/reference/submission_questions.html</loc></url>

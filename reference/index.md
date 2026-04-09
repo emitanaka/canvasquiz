@@ -61,6 +61,8 @@
 - [`last_quiz_id()`](http://emitanaka.org/canvasquiz/reference/last-ids.md)
   [`last_question_id()`](http://emitanaka.org/canvasquiz/reference/last-ids.md)
   : Get the ID of the most recently created quiz in a course
+- [`list_attempted_questions()`](http://emitanaka.org/canvasquiz/reference/list_attempted_questions.md)
+  : List attempted questions for a quiz
 - [`list_files()`](http://emitanaka.org/canvasquiz/reference/list_files.md)
   : List files in a folder or course
 - [`list_folder()`](http://emitanaka.org/canvasquiz/reference/list_folder.md)
@@ -86,6 +88,8 @@
   : Get quiz statistics
 - [`quiz_submissions()`](http://emitanaka.org/canvasquiz/reference/quiz_submissions.md)
   : Get quiz submissions with question-level answers
+- [`regrade()`](http://emitanaka.org/canvasquiz/reference/regrade.md) :
+  Regrade quiz submissions based on answer
 - [`submission_info()`](http://emitanaka.org/canvasquiz/reference/submission_info.md)
   : Get quiz submission details
 - [`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_overview.md)

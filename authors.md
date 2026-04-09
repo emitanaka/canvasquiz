@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/emitanaka/canvasquiz/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/emitanaka/canvasquiz/blob/HEAD/DESCRIPTION)
 
 Tanaka E (2026). *canvasquiz: Quiz For Canvas Learning Management
 System*. R package version 0.0.9000,

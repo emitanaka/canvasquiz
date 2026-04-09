@@ -32,6 +32,13 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/regrade.html">Regrading quiz submissions</a></li>
+    <li><a class="dropdown-item" href="articles/setup.html">Setup Canvas API environment variables</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -75,7 +82,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>CANVASQUIZ_TOKEN <span class="op">=</span> <span class="st">"your_access_token"</span><span class="op">)</span></span></code></pre></div>
 <p>Or set this in your <code>.Renviron</code> file for persistence across sessions. You can use the <code>usethis</code> package to edit your <code>.Renviron</code> file:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">edit_r_environ</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">edit_r_environ</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The URL is the base URL of your Canvas instance, e.g. at ANU it is <code>https://canvas.anu.edu.au</code>.</p>
 <p>The access token can be generated in your Canvas account settings under “Approved Integrations”.</p>
 <p>The course ID can be found in the URL of your course in Canvas. For example if your course URL is <code>https://canvas.anu.edu.au/courses/12345</code>, then the course ID is <code>12345</code>.</p>

@@ -1,12 +1,12 @@
-# Get quiz submission overview
+# List attempted questions for a quiz
 
-Get quiz submission overview
+List attempted questions for a quiz
 
 ## Usage
 
 ``` r
-submission_overview(
-  submission_id,
+list_attempted_questions(
+  quiz_id,
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),
   token = Sys.getenv("CANVASQUIZ_TOKEN")
@@ -14,10 +14,6 @@ submission_overview(
 ```
 
 ## Arguments
-
-- submission_id:
-
-  The ID of the quiz submission to retrieve details for.
 
 - course_id:
 
@@ -34,15 +30,10 @@ submission_overview(
   The canvas token. Defaults to the value of the `CANVASQUIZ_TOKEN`
   environment variable.
 
-## Value
-
-A data frame with the name of the user, quiz title, score, attempt
-number, quiz id, and submission id.
-
 ## See also
 
 Other submissions:
-[`list_attempted_questions()`](http://emitanaka.org/canvasquiz/reference/list_attempted_questions.md),
 [`list_submissions()`](http://emitanaka.org/canvasquiz/reference/list_submissions.md),
 [`submission_info()`](http://emitanaka.org/canvasquiz/reference/submission_info.md),
+[`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_overview.md),
 [`submission_questions()`](http://emitanaka.org/canvasquiz/reference/submission_questions.md)

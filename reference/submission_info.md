@@ -44,6 +44,7 @@ provided.
 ## See also
 
 Other submissions:
+[`list_attempted_questions()`](http://emitanaka.org/canvasquiz/reference/list_attempted_questions.md),
 [`list_submissions()`](http://emitanaka.org/canvasquiz/reference/list_submissions.md),
 [`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_overview.md),
 [`submission_questions()`](http://emitanaka.org/canvasquiz/reference/submission_questions.md)

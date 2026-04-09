@@ -48,6 +48,7 @@ list_submissions(
 ## See also
 
 Other submissions:
+[`list_attempted_questions()`](http://emitanaka.org/canvasquiz/reference/list_attempted_questions.md),
 [`submission_info()`](http://emitanaka.org/canvasquiz/reference/submission_info.md),
 [`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_overview.md),
 [`submission_questions()`](http://emitanaka.org/canvasquiz/reference/submission_questions.md)
