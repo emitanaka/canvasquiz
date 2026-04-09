@@ -2,7 +2,7 @@
 title: "Setup Canvas API environment variables"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{setup}
+  %\VignetteIndexEntry{Setup Canvas API environment variables}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
