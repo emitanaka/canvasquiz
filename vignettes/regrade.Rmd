@@ -50,7 +50,7 @@ Let's say you want to regrade question ID `238187` for quiz ID `23542` for all t
 ```{r}
 regrade(question_id = 238187, 
         quiz_id = 23542, 
-        answer = 7, # this was supposed to be the correct answer
+        answer = answer_num(7, tol = 0.01),
         fudge_points = 2, 
         score = 2, 
         comment = "Regraded to 2 points since the answer is correct.")

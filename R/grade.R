@@ -23,18 +23,18 @@ list_attempted_questions <- function(quiz_id,
 #' Regrade quiz submissions based on answer
 #' @inheritParams submission_update
 #' @param question_id The ID of the question to regrade.
-#' @param answer The answer to regrade. Can be numeric or character. 
+#' @param answer The answer to regrade. Can be numeric or character or one of the answer functions. 
 #' @export
 regrade <- function(question_id, 
                     quiz_id, 
                     answer = NULL,
-                    tol = 0,
                     fudge_points = NULL,
                     score = NULL,
                     comment = NULL,
                     course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
                     url = Sys.getenv("CANVASQUIZ_URL"), 
                     token = Sys.getenv("CANVASQUIZ_TOKEN")) {
+  
   n <- count_submissions(quiz_id, course_id, url, token)
   subs <- quiz_submissions(quiz_id, n = max(c(1, n))) |> 
     dplyr::filter(.data$question_id == .env$question_id)
@@ -45,14 +45,41 @@ regrade <- function(question_id,
     subs <- subs |> 
       dplyr::mutate(answer_text = text)
   }
-  sub_ids <- subs |> 
-    dplyr::filter(
-      if(is.numeric(answer)) {
-        abs(answer_text - answer) <= tol
+  if(inherits(answer, "canvas_answer")) {
+    if(inherits(answer, "numerical_question")) {
+      type <- answer[[1]]$numerical_answer_type
+      subs <- subs |> 
+        dplyr::mutate(answer_text = as.numeric(text))
+      if(type == "exact_answer") {
+        ans <- answer[[1]]$answer_exact
+        tol <- answer[[1]]$answer_error_margin
+        subs <- subs |> 
+          dplyr::filter(abs(answer_text - ans) <= tol)
+      } else if(type == "precision_answer") {
+        ans <- answer[[1]]$answer_approximate
+        precision <- answer[[1]]$answer_precision
+        subs <- subs |> 
+          dplyr::filter(round(answer_text, precision) == round(ans, precision))
+      } else if(type == "range_answer") {
+        lower <- answer[[1]]$answer_range_start
+        upper <- answer[[1]]$answer_range_end
+        subs <- subs |> 
+          dplyr::filter(answer_text >= lower, answer_text <= upper)
       } else {
-        answer_text == answer
+        cli::cli_abort("Unknown numerical question type.")
       }
-    ) |> 
+    } else if(inherits(answer, "short_answer_question")) {
+      ans <- answer[[1]]$answer_text
+      subs <- subs |> 
+        dplyr::filter(answer_text == ans)
+    } else {
+      cli::cli_abort("Regrading based on answer is only supported for numerical and short answer questions.")
+    }
+  } else {
+    subs <- subs |> 
+      dplyr::filter(answer_text == answer)
+  }
+  sub_ids <- subs |> 
     dplyr::pull(submission_id)  
 
   for(sub_id in sub_ids) {
