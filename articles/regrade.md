@@ -7,8 +7,7 @@ question. In this case, the grader will have to manually update the
 score for each submission. Since the submission will continue to be
 marked wrong, it is also recommended to leave a comment for the student.
 
-But let’s face it. That’s a lot of painful manual work. The
-[`regrade()`](http://emitanaka.org/canvasquiz/reference/regrade.md)
+But let’s face it. That’s a lot of painful manual work. The `regrade()`
 function in the `canvasquiz` package allows you to regrade quiz
 submissions for a specific question based on the answer that was
 submitted. You can specify the new score, comment, and fudge points for
@@ -87,18 +86,17 @@ list_attempted_questions(quiz_id = 23542)
 ## Step 3: Regrade the submissions
 
 Let’s say you want to regrade question ID `238187` for quiz ID `23542`
-for all those that entered the value `7`. The
-[`regrade()`](http://emitanaka.org/canvasquiz/reference/regrade.md)
-function will modify the score, comment, or fudge points for all
-submissions that match the specified answer.
+for all those that entered the value `7`. The `regrade()` function will
+modify the score, comment, or fudge points for all submissions that
+match the specified answer.
 
 ``` r
-regrade(question_id = 238187, 
-        quiz_id = 23542, 
-        answer = answer_num(7, tol = 0.01),
-        fudge_points = 2, 
-        score = 2, 
-        comment = "Regraded to 2 points since the answer is correct.")
+regrade_question(question_id = 238187, 
+                 quiz_id = 23542, 
+                 answer = answer_num(7, tol = 0.01),
+                 fudge_points = 2, 
+                 score = 2, 
+                 comment = "Regraded to 2 points since the answer is correct.")
 #> Updated submission 70081 for "Test Student" on quiz "Quiz 1" (attempt 1, score
 #> before regrade: 6).
 ```

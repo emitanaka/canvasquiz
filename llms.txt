@@ -309,8 +309,8 @@ quiz_submissions(quiz_id = qid)
   : Get quiz statistics
 - [`quiz_submissions()`](http://emitanaka.org/canvasquiz/reference/quiz_submissions.md)
   : Get quiz submissions with question-level answers
-- [`regrade()`](http://emitanaka.org/canvasquiz/reference/regrade.md) :
-  Regrade quiz submissions based on answer
+- [`regrade_question()`](http://emitanaka.org/canvasquiz/reference/regrade_question.md)
+  : Regrade quiz submissions based on answer
 - [`submission_info()`](http://emitanaka.org/canvasquiz/reference/submission_info.md)
   : Get quiz submission details
 - [`submission_overview()`](http://emitanaka.org/canvasquiz/reference/submission_overview.md)

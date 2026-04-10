@@ -73,7 +73,7 @@ score for each submission. Since the submission will continue to be
 marked wrong, it is also recommended to leave a comment for the
 student.</p>
 <p>But let’s face it. That’s a lot of painful manual work. The
-<code><a href="../reference/regrade.html">regrade()</a></code> function in the <code>canvasquiz</code> package
+<code>regrade()</code> function in the <code>canvasquiz</code> package
 allows you to regrade quiz submissions for a specific question based on
 the answer that was submitted. You can specify the new score, comment,
 and fudge points for all submissions that match the specified answer.
@@ -151,16 +151,16 @@ question you want to regrade.</p>
 </h2>
 <p>Let’s say you want to regrade question ID <code>238187</code> for
 quiz ID <code>23542</code> for all those that entered the value
-<code>7</code>. The <code><a href="../reference/regrade.html">regrade()</a></code> function will modify the
+<code>7</code>. The <code>regrade()</code> function will modify the
 score, comment, or fudge points for all submissions that match the
 specified answer.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/regrade.html">regrade</a></span><span class="op">(</span>question_id <span class="op">=</span> <span class="fl">238187</span>, </span>
-<span>        quiz_id <span class="op">=</span> <span class="fl">23542</span>, </span>
-<span>        answer <span class="op">=</span> <span class="fu"><a href="../reference/answer_num.html">answer_num</a></span><span class="op">(</span><span class="fl">7</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>,</span>
-<span>        fudge_points <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>        score <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>        comment <span class="op">=</span> <span class="st">"Regraded to 2 points since the answer is correct."</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/regrade_question.html">regrade_question</a></span><span class="op">(</span>question_id <span class="op">=</span> <span class="fl">238187</span>, </span>
+<span>                 quiz_id <span class="op">=</span> <span class="fl">23542</span>, </span>
+<span>                 answer <span class="op">=</span> <span class="fu"><a href="../reference/answer_num.html">answer_num</a></span><span class="op">(</span><span class="fl">7</span>, tol <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>,</span>
+<span>                 fudge_points <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>                 score <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>                 comment <span class="op">=</span> <span class="st">"Regraded to 2 points since the answer is correct."</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Updated submission <span style="color: #0000BB;">70081</span> for <span style="color: #0000BB;">"Test Student"</span> on quiz <span style="color: #0000BB;">"Quiz 1"</span> (attempt <span style="color: #0000BB;">1</span>, score</span></span>
 <span><span class="co">#&gt; before regrade: <span style="color: #0000BB;">6</span>).</span></span></code></pre></div>
 </div>

@@ -1,11 +1,11 @@
 # Regrade quiz submissions based on answer
 
-Regrade quiz submissions based on answer
+If you leave the answer as NULL, it will not filter the submissions.
 
 ## Usage
 
 ``` r
-regrade(
+regrade_question(
   question_id,
   quiz_id,
   answer = NULL,
