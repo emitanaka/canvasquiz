@@ -8,7 +8,6 @@ regrade(
   question_id,
   quiz_id,
   answer = NULL,
-  tol = 0,
   fudge_points = NULL,
   score = NULL,
   comment = NULL,
@@ -20,7 +19,7 @@ regrade(
 \arguments{
 \item{question_id}{The ID of the question to regrade.}
 
-\item{answer}{The answer to regrade. Can be numeric or character.}
+\item{answer}{The answer to regrade. Can be numeric or character or one of the answer functions.}
 
 \item{course_id}{The course id. Defaults to the value of the \code{CANVASQUIZ_COURSE_ID} environment variable.}
 
