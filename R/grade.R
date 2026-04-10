@@ -21,19 +21,22 @@ list_attempted_questions <- function(quiz_id,
 }
 
 #' Regrade quiz submissions based on answer
+#' 
+#' If you leave the answer as NULL, it will not filter the submissions.
+#' 
 #' @inheritParams submission_update
 #' @param question_id The ID of the question to regrade.
 #' @param answer The answer to regrade. Can be numeric or character or one of the answer functions. 
 #' @export
-regrade <- function(question_id, 
-                    quiz_id, 
-                    answer = NULL,
-                    fudge_points = NULL,
-                    score = NULL,
-                    comment = NULL,
-                    course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
-                    url = Sys.getenv("CANVASQUIZ_URL"), 
-                    token = Sys.getenv("CANVASQUIZ_TOKEN")) {
+regrade_question <- function(question_id, 
+                             quiz_id, 
+                             answer = NULL,
+                             fudge_points = NULL,
+                             score = NULL,
+                             comment = NULL,
+                             course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
+                             url = Sys.getenv("CANVASQUIZ_URL"), 
+                             token = Sys.getenv("CANVASQUIZ_TOKEN")) {
   
   n <- count_submissions(quiz_id, course_id, url, token)
   subs <- quiz_submissions(quiz_id, n = max(c(1, n))) |> 
@@ -75,7 +78,7 @@ regrade <- function(question_id,
     } else {
       cli::cli_abort("Regrading based on answer is only supported for numerical and short answer questions.")
     }
-  } else {
+  } else if(!is.null(answer)) {
     subs <- subs |> 
       dplyr::filter(answer_text == answer)
   }

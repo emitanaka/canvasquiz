@@ -51,10 +51,10 @@ list_attempted_questions(quiz_id = 23542)
 Let's say you want to regrade question ID `238187` for quiz ID `23542` for all those that entered the value `7`. The `regrade()` function will modify the score, comment, or fudge points for all submissions that match the specified answer. 
 
 ```{r}
-regrade(question_id = 238187, 
-        quiz_id = 23542, 
-        answer = answer_num(7, tol = 0.01),
-        fudge_points = 2, 
-        score = 2, 
-        comment = "Regraded to 2 points since the answer is correct.")
+regrade_question(question_id = 238187, 
+                 quiz_id = 23542, 
+                 answer = answer_num(7, tol = 0.01),
+                 fudge_points = 2, 
+                 score = 2, 
+                 comment = "Regraded to 2 points since the answer is correct.")
 ```
