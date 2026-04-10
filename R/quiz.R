@@ -259,6 +259,8 @@ delete_quiz <- function(
 # }
 
 #' List quizzes in a course
+#' 
+#' Currently only a maximum of 100 quizzes will be returned.
 #'
 #' @inheritParams quiz_questions
 #' @return A data frame of quizzes with their details.
@@ -269,6 +271,7 @@ list_quizzes <- function(
   token = Sys.getenv("CANVASQUIZ_TOKEN")
 ) {
   quizzes <- quizzes_url(course_id, url, token) |>
+    httr2::req_url_query(per_page = 100, page = 1) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
   lapply(quizzes, function(quiz) {

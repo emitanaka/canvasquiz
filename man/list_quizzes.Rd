@@ -21,5 +21,5 @@ list_quizzes(
 A data frame of quizzes with their details.
 }
 \description{
-List quizzes in a course
+Currently only a maximum of 100 quizzes will be returned.
 }
