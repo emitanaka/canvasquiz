@@ -9,7 +9,6 @@ regrade(
   question_id,
   quiz_id,
   answer = NULL,
-  tol = 0,
   fudge_points = NULL,
   score = NULL,
   comment = NULL,
@@ -27,7 +26,8 @@ regrade(
 
 - answer:
 
-  The answer to regrade. Can be numeric or character.
+  The answer to regrade. Can be numeric or character or one of the
+  answer functions.
 
 - course_id:
 

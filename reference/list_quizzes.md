@@ -1,6 +1,6 @@
 # List quizzes in a course
 
-List quizzes in a course
+Currently only a maximum of 100 quizzes will be returned.
 
 ## Usage
 

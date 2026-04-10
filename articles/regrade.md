@@ -15,6 +15,8 @@ submitted. You can specify the new score, comment, and fudge points for
 all submissions that match the specified answer. This can save you a lot
 of time and effort in regrading quiz submissions.
 
+Note that the regrading only works for ***graded quizzes***.
+
 ``` r
 library(canvasquiz)
 ```
