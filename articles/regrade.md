@@ -7,7 +7,8 @@ question. In this case, the grader will have to manually update the
 score for each submission. Since the submission will continue to be
 marked wrong, it is also recommended to leave a comment for the student.
 
-But let’s face it. That’s a lot of painful manual work. The `regrade()`
+But let’s face it. That’s a lot of painful manual work. The
+[`regrade_question()`](http://emitanaka.org/canvasquiz/reference/regrade_question.md)
 function in the `canvasquiz` package allows you to regrade quiz
 submissions for a specific question based on the answer that was
 submitted. You can specify the new score, comment, and fudge points for

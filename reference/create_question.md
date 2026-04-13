@@ -13,6 +13,7 @@ create_question(
   answers = NULL,
   points = 1,
   quiz_id = last_quiz_id(),
+  quiz_group_id = NULL,
   position = NULL,
   title = NULL,
   correct_comments = NULL,
@@ -42,6 +43,10 @@ create_question(
 - quiz_id:
 
   The id of the quiz to add the question to.
+
+- quiz_group_id:
+
+  The id of the quiz group to add the question to.
 
 - position:
 
