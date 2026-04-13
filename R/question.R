@@ -63,7 +63,7 @@ create_question <- function(
       question = list(
         question_name = title,
         question_text = text,
-        #quiz_group_id = quiz_group_id,
+        quiz_group_id = quiz_group_id,
         question_type = class(answers)[1],
         position = position,
         points_possible = points,
