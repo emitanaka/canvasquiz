@@ -12,9 +12,9 @@ upload_tag_file(
   file_path,
   text = "Download",
   folder_id = NULL,
-  course_id = Sys.getenv("CANVAS_COURSE_ID"),
-  url = Sys.getenv("CANVAS_URL"),
-  token = Sys.getenv("CANVAS_TOKEN")
+  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
+  url = Sys.getenv("CANVASQUIZ_URL"),
+  token = Sys.getenv("CANVASQUIZ_TOKEN")
 )
 }
 \arguments{

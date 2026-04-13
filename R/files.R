@@ -51,6 +51,7 @@ list_folder <- function(
 upload_file <- function(
   file,
   folder_id = NULL,
+  #overwrite = TRUE,
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),
   token = Sys.getenv("CANVASQUIZ_TOKEN")
@@ -59,9 +60,9 @@ upload_file <- function(
     folder_id <- list_folder(course_id, url, token) |> 
       dplyr::filter(created_at == max(created_at)) |> 
       dplyr::pull(id)
-    cli::cli_alert("The folder ID is not provided. Uploading to the most recently created folder with ID {.val folder_id}.")
+    cli::cli_alert("The folder ID is not provided. Uploading to the most recently created folder with ID {.val {folder_id}}.")
   }
-  resp <- canvas_url(course_id, url, token) |>
+  resp <- canvas_url(url, token) |>
     httr2::req_url_path_append("folders", folder_id, "files/") |>
     httr2::req_body_json(list(
       name = basename(file),
@@ -83,7 +84,7 @@ upload_file <- function(
     httr2::req_perform() |>
     httr2::resp_body_json()
 
-  cli::cli_inform("File {.val file} uploaded to folder ID {.val folder_id}.")
+  cli::cli_inform("File {.val {basename(file)}} uploaded to folder ID {.val {folder_id}}.")
 
   resp$id
 }

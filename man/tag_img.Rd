@@ -9,7 +9,7 @@ tag_img(
   file_id,
   width = "100\%",
   class = "",
-  course_id = Sys.getenv("CANVAS_COURSE_ID")
+  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID")
 )
 
 upload_tag_img(
@@ -17,9 +17,9 @@ upload_tag_img(
   width = "100\%",
   class = "",
   folder_id = NULL,
-  course_id = Sys.getenv("CANVAS_COURSE_ID"),
-  url = Sys.getenv("CANVAS_URL"),
-  token = Sys.getenv("CANVAS_TOKEN")
+  course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
+  url = Sys.getenv("CANVASQUIZ_URL"),
+  token = Sys.getenv("CANVASQUIZ_TOKEN")
 )
 }
 \arguments{
@@ -29,7 +29,7 @@ upload_tag_img(
 
 \item{class}{Optional CSS class to apply to the \verb{<img>} tag.}
 
-\item{course_id}{The ID of the Canvas course where the file is stored (default is taken from the environment variable \code{CANVAS_COURSE_ID}).}
+\item{course_id}{The ID of the Canvas course where the file is stored (default is taken from the environment variable \code{CANVASQUIZ_COURSE_ID}).}
 }
 \value{
 A character string containing the HTML \verb{<img>} tag for the specified image file.

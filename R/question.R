@@ -248,6 +248,7 @@ list_question_groups <- function(
 #' @param url The canvas url. Defaults to the value of the `CANVASQUIZ_URL` environment variable.
 #' @param token The canvas token. Defaults to the value of the `CANVASQUIZ_TOKEN` environment variable.
 #' @return The API response from adding the questions.
+#' @export
 add_question_from_bank <- function(
   quiz_id,
   bank_id,
