@@ -7,7 +7,8 @@
 list_folder(
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),
-  token = Sys.getenv("CANVASQUIZ_TOKEN")
+  token = Sys.getenv("CANVASQUIZ_TOKEN"),
+  tz = Sys.timezone()
 )
 }
 \arguments{
