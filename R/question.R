@@ -9,6 +9,7 @@
 #' @param points The maximum amount of points received for answering this question correctly.
 #' @param position An integer specifying the order in which the question will be displayed in the quiz. Doesn't seem to work.
 #' @param quiz_id The id of the quiz to add the question to.
+#' @param quiz_group_id The id of the quiz group to add the question to. 
 #' @param title The name of the question.
 #' @param correct_comments Comment to display if the student answers the question correctly.
 #' @param incorrect_comments Comment to display if the student answers incorrectly.
@@ -22,7 +23,7 @@ create_question <- function(
   answers = NULL,
   points = 1,
   quiz_id = last_quiz_id(),
-  #quiz_group_id = NULL,
+  quiz_group_id = NULL,
   position = NULL,
   title = NULL,
   correct_comments = NULL,

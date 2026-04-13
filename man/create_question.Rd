@@ -9,6 +9,7 @@ create_question(
   answers = NULL,
   points = 1,
   quiz_id = last_quiz_id(),
+  quiz_group_id = NULL,
   position = NULL,
   title = NULL,
   correct_comments = NULL,
@@ -27,6 +28,8 @@ create_question(
 \item{points}{The maximum amount of points received for answering this question correctly.}
 
 \item{quiz_id}{The id of the quiz to add the question to.}
+
+\item{quiz_group_id}{The id of the quiz group to add the question to.}
 
 \item{position}{An integer specifying the order in which the question will be displayed in the quiz. Doesn't seem to work.}
 
