@@ -7,7 +7,7 @@ Upload a file to a folder
 ``` r
 upload_file(
   file,
-  folder_id,
+  folder_id = NULL,
   course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"),
   url = Sys.getenv("CANVASQUIZ_URL"),
   token = Sys.getenv("CANVASQUIZ_TOKEN")

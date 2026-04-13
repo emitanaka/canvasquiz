@@ -98,6 +98,15 @@
   : List attempted questions for a quiz
 - [`submission_update()`](http://emitanaka.org/canvasquiz/reference/submission_update.md)
   : Update a quiz submission
+- [`tag_file()`](http://emitanaka.org/canvasquiz/reference/tag_file.md)
+  [`upload_tag_file()`](http://emitanaka.org/canvasquiz/reference/tag_file.md)
+  : Generate an HTML link to download a file in a Canvas course This
+  function creates an HTML link that allows users to download a file
+  stored in a Canvas course. The link will point to the download URL for
+  the specified file.
+- [`tag_img()`](http://emitanaka.org/canvasquiz/reference/tag_img.md)
+  [`upload_tag_img()`](http://emitanaka.org/canvasquiz/reference/tag_img.md)
+  : Generate an HTML image tag for a file in a Canvas course
 - [`update_question()`](http://emitanaka.org/canvasquiz/reference/update_question.md)
   : Update a quiz question
 - [`upload_file()`](http://emitanaka.org/canvasquiz/reference/upload_file.md)

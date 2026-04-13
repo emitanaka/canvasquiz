@@ -199,6 +199,23 @@ create_question("Upload a file with your answer.",
                 quiz_id = qid)
 ```
 
+### Writing quiz with mathematics
+
+Writing LaTeX in Canvas quizzes via the API involves inserting LaTeX
+code within specific delimiters—\\ and \\ for inline,
+``` math
+ and 
+```
+for display mode—directly into the HTML content fields of quiz
+questions. Canvas automatically renders this LaTeX via KaTeX, which
+supports standard mathematical notation.
+
+``` r
+create_question("What is the value of \\(\\pi\\) to two decimal places?",
+                answers = answer_num_precision(3.14, precision = 2),
+                quiz_id = qid)
+```
+
 ### Retrieving quiz data
 
 Quiz statistics:

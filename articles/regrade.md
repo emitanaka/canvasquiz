@@ -38,12 +38,13 @@ function to get a list of quizzes and their IDs.
 
 ``` r
 list_quizzes()
-#> # A tibble: 3 × 45
+#> # A tibble: 4 × 45
 #>      id title              html_url  mobile_url description quiz_type time_limit
 #>   <int> <chr>              <chr>     <chr>      <chr>       <chr>          <int>
 #> 1 23542 Quiz 1             https://… https://c… "<p>This a… assignme…         30
 #> 2 23541 Quiz for questions https://… https://c… ""          practice…         NA
 #> 3 23543 Quiz for questions https://… https://c…  NA         practice…         NA
+#> 4 23597 TEST               https://… https://c…  NA         practice…         NA
 #> # ℹ 38 more variables: timer_autosubmit_disabled <lgl>, shuffle_answers <lgl>,
 #> #   show_correct_answers <lgl>, scoring_policy <chr>, allowed_attempts <int>,
 #> #   one_question_at_a_time <lgl>, question_count <int>, points_possible <dbl>,

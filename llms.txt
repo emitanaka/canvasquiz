@@ -199,6 +199,23 @@ create_question("Upload a file with your answer.",
                 quiz_id = qid)
 ```
 
+### Writing quiz with mathematics
+
+Writing LaTeX in Canvas quizzes via the API involves inserting LaTeX
+code within specific delimiters—\\ and \\ for inline,
+``` math
+ and 
+```
+for display mode—directly into the HTML content fields of quiz
+questions. Canvas automatically renders this LaTeX via KaTeX, which
+supports standard mathematical notation.
+
+``` r
+create_question("What is the value of \\(\\pi\\) to two decimal places?",
+                answers = answer_num_precision(3.14, precision = 2),
+                quiz_id = qid)
+```
+
 ### Retrieving quiz data
 
 Quiz statistics:
@@ -319,6 +336,15 @@ quiz_submissions(quiz_id = qid)
   : List attempted questions for a quiz
 - [`submission_update()`](http://emitanaka.org/canvasquiz/reference/submission_update.md)
   : Update a quiz submission
+- [`tag_file()`](http://emitanaka.org/canvasquiz/reference/tag_file.md)
+  [`upload_tag_file()`](http://emitanaka.org/canvasquiz/reference/tag_file.md)
+  : Generate an HTML link to download a file in a Canvas course This
+  function creates an HTML link that allows users to download a file
+  stored in a Canvas course. The link will point to the download URL for
+  the specified file.
+- [`tag_img()`](http://emitanaka.org/canvasquiz/reference/tag_img.md)
+  [`upload_tag_img()`](http://emitanaka.org/canvasquiz/reference/tag_img.md)
+  : Generate an HTML image tag for a file in a Canvas course
 - [`update_question()`](http://emitanaka.org/canvasquiz/reference/update_question.md)
   : Update a quiz question
 - [`upload_file()`](http://emitanaka.org/canvasquiz/reference/upload_file.md)
