@@ -120,3 +120,17 @@ convert_time <- function(.data, col, tz = Sys.timezone()) {
   .data
 }
 
+#' @export
+open_quiz <- function(quiz_id = last_quiz_id(), 
+                      course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
+                      url = Sys.getenv("CANVASQUIZ_URL"), 
+                      token = Sys.getenv("CANVASQUIZ_TOKEN")) {
+  browseURL(paste0(url, "/courses/", course_id, "/quizzes/", quiz_id))
+}
+
+#' @export
+open_quiz_bank <- function(course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
+                      url = Sys.getenv("CANVASQUIZ_URL"), 
+                      token = Sys.getenv("CANVASQUIZ_TOKEN")) {
+  browseURL(paste0(url, "/courses/", course_id, "/question_banks"))
+}
