@@ -130,3 +130,36 @@ regrade_question <- function(question_id,
 #                attempt = vapply(res$submissions, function(x) x$attempt, numeric(1)))
 #   }
 # }
+
+
+
+list_scores <- function(course_id = Sys.getenv("CANVASQUIZ_COURSE_ID"), 
+                        url = Sys.getenv("CANVASQUIZ_URL"), 
+                        token = Sys.getenv("CANVASQUIZ_TOKEN"),
+                        n = 121) {
+  get_page <- function(page) {
+    resp <- course_url() |> 
+      httr2::req_url_path_append("users") |> 
+      httr2::req_method("GET") |>  
+      httr2::req_url_query(per_page = 100, page = page) |>
+      httr2::req_body_json(list(include = "enrollments")) |> 
+      httr2::req_perform() |> 
+      httr2::resp_body_json()
+      data.frame(id = vapply(resp, function(x) x$id, numeric(1)),
+                uid = vapply(resp, function(x) x$sis_user_id, character(1)),
+                name = vapply(resp, function(x) x$name, character(1)),
+                score_current = vapply(resp, function(x) {
+                  enrollments <- x$enrollments
+                  if(length(enrollments) == 0) return(NA)
+                  enrollment <- enrollments[[1]]
+                  if(is.null(enrollment$grades)) return(NA)
+                  enrollment$grades$unposted_current_score
+                }, numeric(1)))
+  }
+  res <- res1 <- get_page(ipage <- 1)
+  while(nrow(res1) == 100 | nrow(res) < n) {
+    res1 <- get_page(ipage <- ipage + 1)
+    res <- rbind(res, res1)
+  }
+  res
+}
